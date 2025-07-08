@@ -2,7 +2,6 @@
 import { reactive } from 'vue';
 import { login } from '@/Services/accountService';
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
 
 const state = reactive({
@@ -11,6 +10,7 @@ const state = reactive({
     loginPw: '',
   },
 });
+
 const submit = async () => {
   const res = await login(state.form);
 
@@ -19,7 +19,7 @@ const submit = async () => {
       await router.push('/');
       break;
     case 404:
-      alert('아디/비번 확인해라');
+      alert('아이디/비밀번호를 확인해 주세요.');
       break;
   }
 };
@@ -29,7 +29,8 @@ const submit = async () => {
   <div class="login">
     <div class="container">
       <form class="py-5 d-flex flex-column gap-3" @submit.prevent="submit">
-        <h1 class="h5 mb-5">로그인</h1>
+        <h1 class="h5 mb-3">로그인</h1>
+
         <div class="form-floating">
           <input
             type="text"
@@ -38,7 +39,7 @@ const submit = async () => {
             placeholder="이메일"
             v-model="state.form.loginId"
           />
-          <label for="name">이메일</label>
+          <label for="loginId">이메일</label>
         </div>
         <div class="form-floating">
           <input
@@ -49,7 +50,7 @@ const submit = async () => {
             v-model="state.form.loginPw"
             autocomplete="off"
           />
-          <label for="name">패스워드</label>
+          <label for="loginPw">패스워드</label>
         </div>
         <button class="w-100 h6 btn py-3 btn-primary">로그인</button>
       </form>
@@ -57,8 +58,8 @@ const submit = async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.login > .container {
+<style scoped>
+.container {
   max-width: 576px;
 }
 </style>

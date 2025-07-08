@@ -13,11 +13,14 @@ const account = useAccountStore();
 const checkAccount = async () => {
   console.log('로그인 체크');
   const res = await check();
-  if (res.status === 200) {
-    account.setChecked(true);
-    account.setLoggedIn(true);
-  } else {
+  console.log('res:', res);
+  if (res === undefined || res.status != 200) {
     account.setChecked(false);
+    return;
+  }
+  else{
+  account.setChecked(true);
+  account.setLoggedIn(res.data > 0);
   }
 };
 
@@ -29,15 +32,17 @@ watch(
   () => route.path,
   () => {
     checkAccount();
-    // console.log('라우팅!');
   }
 );
 </script>
 
 <template>
-  <Header />
-  <router-view></router-view>
-  <Footer />
+  <template v-if="account.state.checked">
+    <Header />
+    <router-view></router-view>
+    <Footer />
+  </template>
+  <template v-else> 서버 통신 오류 </template>
 </template>
 
 <style scoped></style>
