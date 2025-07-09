@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from 'vue';
+import { addItem } from '@/Services/cartService';
+import { useAccountStore } from '@/stores/account';
 //프로퍼티 객체
 const props = defineProps({
   item: {
@@ -19,10 +21,21 @@ const computedItemDiscountPrice = computed(() => {
     ).toLocaleString() + '원'
   );
 });
+
+const account = useAccountStore();
 //장바구니에 상품 담기
 const put = async () => {
-//   window.alert('준비 중입니다.');
+  //   window.alert('준비 중입니다.');
+  if (!account.state.loggedIn) {
+    alert('로그인 하세용');
+    return;
+  }
 
+  const res = await addItem(props.item.id);
+  if (res === undefined || res.status !== 200) {
+    return;
+  }
+  console.log('카트 담기 성공!');
 };
 </script>
 <template>
