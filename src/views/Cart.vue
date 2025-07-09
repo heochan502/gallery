@@ -1,5 +1,5 @@
 <script setup>
-import { getItems } from '@/Services/itemService';
+import { getItems } from '@/Services/cartService';
 import { onMounted, reactive } from 'vue';
 
 const state = reactive({
@@ -15,7 +15,7 @@ const load = async()=>{
     {
         state.items =res.data;
     }
-    console.log(state.items);
+    console.log("상태 : ", state.items);
 
 }
 
@@ -41,12 +41,12 @@ onMounted(()=> {
             <template v-if="state.items.length">
                 <ul class="items">
                     <li v-for="i in state.items"> 
-                        <img :alt="`상품 사진 (${i.name})`" :src="i.imgPath"/>
+                        <img :alt="`상품 사진 (${i.name})`" :src="`/pic/item/${i.imgPath}`"/>
                         <b class="name">{{ i.name }}</b>
                         <span class="price">
                             {{  (i.price - i.price * i.discountPer /100).toLocaleString() }} 원
                         </span>
-                        <span class="remove float-end" @click="remove(i.id)" title="삭제">&items;</span>
+                        <span class="remove float-end" @click="remove(i.id)" title="삭제">&times;</span>
 
                     </li>
 
