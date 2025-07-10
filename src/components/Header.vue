@@ -5,22 +5,17 @@ import { logout } from '@/Services/accountService';
 
 const account = useAccountStore();
 
-
 //로그아웃
 const logoutAccount = async () => {
-
-  if(!confirm('로그아웃 하시겠습니다?'))
-{
-  return;
-}
-const res = await logout();
-if(res===undefined || res.status !==200)
-{
-  return;
-}
-account.setLoggedIn(false);
-  alert("로그아웃 완료");
-  
+  if (!confirm('로그아웃 하시겠습니다?')) {
+    return;
+  }
+  const res = await logout();
+  if (res === undefined || res.status !== 200) {
+    return;
+  }
+  account.setLoggedIn(false);
+  alert('로그아웃 완료');
 };
 </script>
 
