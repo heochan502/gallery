@@ -44,7 +44,7 @@ const submit = async () => {
   }
   state.form.itemIds = state.items.map((item) => item.itemId);
   const res = await addOrder(state.form);
-  console.log('res : ', state.form);
+  console.log('res : ', state.form.itemIds);
 };
 
 onMounted(() => {
