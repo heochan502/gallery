@@ -9,10 +9,17 @@ const state = reactive({
 
 const load = async () =>{
     const res = await getOrders();
-    if(res.status===200){
-        state.orders=res.data;
-    }    
+    
+    if(res.status !== 200 || res === undefined){
+        alert('오류 발생!');
+        return;      
+    }   
+    state.orders=res.data; 
 };
+
+onMounted(async()=>{
+    await load();
+})
 
 // (async function onCreated() {
 //     await load();
